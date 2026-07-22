@@ -21,10 +21,12 @@ jobs:
       - name: Wait for Odoo to be ready
         run: |
           for i in {1..30}; do
-            curl -sf http://localhost:8069/web/login && break
-            echo "Waiting for Odoo..."
+            curl -sf http://localhost:8070/web/login && exit 0
+            echo "Waiting for Odoo... ($i/30)"
             sleep 5
           done
+          echo "Odoo did not become ready in time"
+          exit 1
 
       - name: Install and test school_management module
         run: |
@@ -33,7 +35,9 @@ jobs:
 
       - name: Show logs on failure
         if: failure()
-        run: docker compose logs odoo
+        run: |
+          docker compose logs odoo
+          docker compose logs db
 
       - name: Tear down
         if: always()
