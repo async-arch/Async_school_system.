@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Version Control & OS metadata
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Environment variables & secrets
+.env
+*.env
+
+# Docker data persistence (Database state)
+postgres_data/
+
+# Odoo log files and temporary sessions
+*.log
+*.pid

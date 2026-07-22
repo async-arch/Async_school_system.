@@ -1,0 +1,6 @@
+.git
+.gitignore
+.dockerignore
+postgres_data/
+*.log
+README.md
