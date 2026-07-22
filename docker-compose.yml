@@ -5,6 +5,11 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     volumes:
       - odoo-db-data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -12,7 +17,8 @@ services:
   odoo:
     image: odoo:${ODOO_VERSION}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "8070:8069"
     environment:
