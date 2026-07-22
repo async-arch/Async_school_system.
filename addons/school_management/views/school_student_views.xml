@@ -1,3 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="view_school_student_form" model="ir.ui.view">
+        <field name="name">school.student.form</field>
+        <field name="model">school.student</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_submitted" type="object" string="Submit" class="oe_highlight" invisible="registration_status != 'draft'"/>
+                    <button name="action_mark_approved" type="object" string="Approve" class="oe_highlight" invisible="registration_status != 'submitted'"/>
+                    <field name="registration_status" widget="statusbar" statusbar_visible="draft,submitted,approved"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Identity">
+                            <field name="regno" readonly="1"/>
+                            <field name="name"/>
+                            <field name="date_of_birth"/>
+                            <field name="age" readonly="1"/>
+                            <field name="gender"/>
+                            <field name="class_id"/>
+                        </group>
+                        <group string="Parent / Guardian">
+                            <field name="guardian_name"/>
+                            <field name="guardian_phone"/>
+                            <field name="previous_school"/>
+                        </group>
+                    </group>
+                    <group string="Documents">
+                        <field name="birth_certificate" filename="birth_certificate_filename"/>
+                        <field name="birth_certificate_filename" invisible="1"/>
+                        <field name="previous_grade_document" filename="previous_grade_document_filename"/>
+                        <field name="previous_grade_document_filename" invisible="1"/>
+                    </group>
+                    <group string="Registration Info">
+                        <field name="registration_date"/>
+                        <field name="responsible_staff_id"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">form,tree</field>
+    </record>
 </odoo>

@@ -4,9 +4,12 @@ from odoo import fields, models
 class SchoolClass(models.Model):
     _name = 'school.class'
     _description = 'School Grade / Class'
+    _order = 'name, section, academic_year'
+
     name = fields.Char(string='Grade / Class', required=True)
     section = fields.Char(string='Section')
     academic_year = fields.Char(string='Academic Year', required=True)
+    student_ids = fields.One2many('school.student', 'class_id', string='Students')
 
     _sql_constraints = [
         ('class_section_year_unique', 'unique(name, section, academic_year)',

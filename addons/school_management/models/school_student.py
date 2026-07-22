@@ -91,3 +91,18 @@ class SchoolStudent(models.Model):
             if vals.get('regno', 'New') == 'New':
                 vals['regno'] = self.env['ir.sequence'].next_by_code('school.student') or 'New'
         return super().create(vals_list)
+
+    def action_mark_submitted(self):
+        for rec in self:
+            missing = rec._validate_submission_requirements()
+            if missing:
+                raise ValidationError(
+                    "Cannot submit: missing %s" % ', '.join(missing)
+                )
+            rec.registration_status = 'submitted'
+
+    def action_mark_approved(self):
+        for rec in self:
+            if rec.registration_status != 'submitted':
+                raise ValidationError("Only submitted registrations can be approved.")
+            rec.registration_status = 'approved'
