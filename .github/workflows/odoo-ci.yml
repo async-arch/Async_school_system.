@@ -1,0 +1,40 @@
+name: Odoo Module CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy env template
+        run: cp .env.example .env
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Wait for Odoo to be ready
+        run: |
+          for i in {1..30}; do
+            curl -sf http://localhost:8069/web/login && break
+            echo "Waiting for Odoo..."
+            sleep 5
+          done
+
+      - name: Install and test school_management module
+        run: |
+          docker compose exec -T odoo odoo -i school_management \
+            -d ci_test_db --stop-after-init --without-demo=False
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs odoo
+
+      - name: Tear down
+        if: always()
+        run: docker compose down -v
