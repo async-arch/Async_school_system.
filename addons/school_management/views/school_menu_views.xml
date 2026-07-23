@@ -1,3 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <menuitem id="menu_school_management_root"
+              name="School Management"
+              sequence="10"/>
+
+    <menuitem id="menu_school_mark"
+              name="Mark List"
+              parent="menu_school_management_root"
+              action="action_school_mark"
+              sequence="30"/>
+
 </odoo>

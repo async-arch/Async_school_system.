@@ -1,3 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- List view: class mark list -->
+    <record id="view_school_mark_list" model="ir.ui.view">
+        <field name="name">school.mark.list</field>
+        <field name="model">school.mark</field>
+        <field name="arch" type="xml">
+            <list string="Mark List" editable="bottom">
+                <field name="student_id"/>
+                <field name="class_id"/>
+                <field name="academic_year"/>
+                <field name="term"/>
+                <field name="subject"/>
+                <field name="assessment_type"/>
+                <field name="max_mark"/>
+                <field name="score"/>
+                <field name="percentage" widget="percentage"/>
+                <field name="grade"/>
+                <field name="pass_fail" widget="badge" decoration-success="pass_fail == 'pass'" decoration-danger="pass_fail == 'fail'"/>
+                <field name="teacher_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_school_mark_form" model="ir.ui.view">
+        <field name="name">school.mark.form</field>
+        <field name="model">school.mark</field>
+        <field name="arch" type="xml">
+            <form string="Mark List Entry">
+                <sheet>
+                    <group>
+                        <group string="Student &amp; Class">
+                            <field name="class_id"/>
+                            <field name="student_id"/>
+                            <field name="academic_year"/>
+                        </group>
+                        <group string="Assessment">
+                            <field name="term"/>
+                            <field name="subject"/>
+                            <field name="assessment_type"/>
+                            <field name="teacher_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Score">
+                            <field name="max_mark"/>
+                            <field name="score"/>
+                        </group>
+                        <group string="Result">
+                            <field name="percentage" widget="percentage" readonly="1"/>
+                            <field name="grade" readonly="1"/>
+                            <field name="pass_fail" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Remarks">
+                        <field name="remarks" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view: filters for class mark list + student history -->
+    <record id="view_school_mark_search" model="ir.ui.view">
+        <field name="name">school.mark.search</field>
+        <field name="model">school.mark</field>
+        <field name="arch" type="xml">
+            <search string="Search Marks">
+                <field name="student_id"/>
+                <field name="class_id"/>
+                <field name="subject"/>
+                <field name="term"/>
+                <field name="academic_year"/>
+                <filter string="Pass" name="filter_pass" domain="[('pass_fail', '=', 'pass')]"/>
+                <filter string="Fail" name="filter_fail" domain="[('pass_fail', '=', 'fail')]"/>
+                <separator/>
+                <filter string="Term 1" name="filter_term1" domain="[('term', '=', 'term1')]"/>
+                <filter string="Term 2" name="filter_term2" domain="[('term', '=', 'term2')]"/>
+                <filter string="Final" name="filter_term_final" domain="[('term', '=', 'final')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Class" name="group_by_class" context="{'group_by': 'class_id'}"/>
+                    <filter string="Student" name="group_by_student" context="{'group_by': 'student_id'}"/>
+                    <filter string="Subject" name="group_by_subject" context="{'group_by': 'subject'}"/>
+                    <filter string="Term" name="group_by_term" context="{'group_by': 'term'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action: Class Mark List (default view, grouped/filterable by class) -->
+    <record id="action_school_mark" model="ir.actions.act_window">
+        <field name="name">Mark List</field>
+        <field name="res_model">school.mark</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_mark_search"/>
+        <field name="context">{'search_default_group_by_class': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first mark list entry
+            </p>
+        </field>
+    </record>
+
 </odoo>
