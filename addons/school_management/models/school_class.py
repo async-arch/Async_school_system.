@@ -1,9 +1,8 @@
-<<<<<<< HEAD
-from odoo import fields, models # type: ignore
+from odoo import fields, models  # type: ignore
 
 
 class SchoolClass(models.Model):
-    _name = 'school.class'
+    _name = 'school.class'  # MUST MATCH XML res_model
     _description = 'School Grade / Class'
     _order = 'name, section, academic_year'
 
@@ -13,13 +12,9 @@ class SchoolClass(models.Model):
     student_ids = fields.One2many('school.student', 'class_id', string='Students')
 
     _sql_constraints = [
-        ('class_section_year_unique', 'unique(name, section, academic_year)',
-         'This class/section already exists for this academic year.'),
+        (
+            'class_section_year_unique',
+            'unique(name, section, academic_year)',
+            'This class/section already exists for this academic year.',
+        ),
     ]
-=======
-from odoo import models, fields # type: ignore
-
-class SchoolClass(models.Model):
-    _name = 'school.class'  # <-- MUST MATCH XML res_model
-    _description = 'School Class'
->>>>>>> fix/ci-port-and-healthcheck
