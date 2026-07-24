@@ -34,4 +34,11 @@ attendance tracking and mark/result entry referencing the same student record.
     'demo': [
         'demo/school_demo.xml',
     ],
+
+    # ======================================================= #
+   
+    # ======================================================= #
+    'application': True,  
+    'installable': True,
+    'auto_install': False,
 }
