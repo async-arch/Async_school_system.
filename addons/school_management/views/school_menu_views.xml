@@ -1,17 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--  Root menu  -->
-    <menuitem
-        id="school_management_root_menu"
-        name="School Management"
-    />
-     
-     <!-- attendance menu  -->
-    <menuitem
-        id="school_attendance_menu"
-        name="Attendance"
-        parent="school_management_root_menu"
-        action="action_school_attendance"
-    />
-
 </odoo>
