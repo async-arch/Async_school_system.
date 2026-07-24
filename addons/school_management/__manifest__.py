@@ -17,7 +17,7 @@ attendance tracking and mark/result entry referencing the same student record.
     'category': 'Education',
     'version': '0.1',
 
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'web'],
 
     'data': [
         'security/school_security.xml',
